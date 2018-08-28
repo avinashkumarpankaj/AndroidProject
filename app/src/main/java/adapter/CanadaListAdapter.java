@@ -1,5 +1,6 @@
 package adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidproject.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoProvider;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ import model.Row;
 
 public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.MyViewHolder> {
     private ArrayList<Row> mList;
+    private Context mContext;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.title)
@@ -30,7 +34,7 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
         @BindView(R.id.description)
         TextView mTxtDescription;
 
-        @BindView(R.id.image)
+        @BindView(R.id.image_view)
         ImageView mImage;
 
         MyViewHolder(View v) {
@@ -51,8 +55,7 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_row, parent, false);
 
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -60,8 +63,22 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
 
         Row rowData = mList.get(position);
 
-        holder.mTxtTitle.setText(rowData.getTitle());
-        holder.mTxtDescription.setText(rowData.getDescription());
+        if (rowData != null) {
+            holder.mTxtTitle.setText(rowData.getTitle());
+            if (rowData.getDescription() != null)
+            holder.mTxtDescription.setText(rowData.getDescription());
+            else
+                holder.mTxtDescription.setText("**Description not available**");
+
+
+            Picasso.get()
+                    .load(rowData.getImageHref())
+                    .placeholder(R.drawable.blank_image)
+                    .error(R.drawable.blank_image)
+                    .into(holder.mImage);
+
+
+        }
 
     }
 

@@ -6,7 +6,7 @@ public class Row {
 
     private String title;
     private String description;
-    private Object imageHref;
+    private String imageHref;
 
     public String getTitle() {
         return title;
@@ -24,11 +24,11 @@ public class Row {
         this.description = description;
     }
 
-    public Object getImageHref() {
+    public String getImageHref() {
         return imageHref;
     }
 
-    public void setImageHref(Object imageHref) {
+    public void setImageHref(String imageHref) {
         this.imageHref = imageHref;
     }
 
