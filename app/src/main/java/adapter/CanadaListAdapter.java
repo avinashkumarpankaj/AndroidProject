@@ -16,6 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import model.Row;
 
+/**
+ * Created by Avinash on 8/28/2018.
+ */
+
 public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.MyViewHolder> {
     private ArrayList<Row> mList;
 
@@ -31,7 +35,7 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
 
         MyViewHolder(View v) {
             super(v);
-
+            ButterKnife.bind(this, v);
         }
     }
 
@@ -47,7 +51,6 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_row, parent, false);
 
-        ButterKnife.bind(this, v);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }

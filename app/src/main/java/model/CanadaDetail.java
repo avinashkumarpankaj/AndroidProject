@@ -1,12 +1,12 @@
 
 package model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CanadaDetail {
 
     private String title;
-    private List<Row> rows = null;
+    private ArrayList<Row> rows = null;
 
     public String getTitle() {
         return title;
@@ -16,11 +16,11 @@ public class CanadaDetail {
         this.title = title;
     }
 
-    public List<Row> getRows() {
+    public ArrayList<Row> getRows() {
         return rows;
     }
 
-    public void setRows(List<Row> rows) {
+    public void setRows(ArrayList<Row> rows) {
         this.rows = rows;
     }
 
