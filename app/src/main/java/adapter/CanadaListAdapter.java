@@ -12,19 +12,26 @@ import com.androidproject.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import model.Row;
 
 public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.MyViewHolder> {
     private ArrayList<Row> mList;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mTxtTitle, mTxtDescription;
+        @BindView(R.id.title)
+        TextView mTxtTitle;
+
+        @BindView(R.id.description)
+        TextView mTxtDescription;
+
+        @BindView(R.id.image)
         ImageView mImage;
+
         MyViewHolder(View v) {
             super(v);
-            mTxtTitle = v.findViewById(R.id.title);
-            mTxtDescription = v.findViewById(R.id.description);
-            mImage = v.findViewById(R.id.image);
+
         }
     }
 
@@ -35,11 +42,12 @@ public class CanadaListAdapter extends RecyclerView.Adapter<CanadaListAdapter.My
     @NonNull
     @Override
     public CanadaListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                             int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_row, parent, false);
 
+        ButterKnife.bind(this, v);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
