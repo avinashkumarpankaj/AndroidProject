@@ -20,13 +20,13 @@ import model.CanadaDetail;
 import model.ResponseListener;
 import servercommunication.ServerCommunicator;
 
+import static Utils.Constants.LIST_TAG;
+
 /**
  * Created by Avinash on 8/28/2018.
  */
 
 public class ListActivity extends AppCompatActivity implements ResponseListener {
-
-    private final int LIST_TAG = 100001;
 
     @BindView(R.id.recyclerViewList)
     RecyclerView recyclerViewList;
@@ -66,12 +66,12 @@ public class ListActivity extends AppCompatActivity implements ResponseListener 
 
     private void callApi() {
 
-        if (UtilClass.isNetworkAvailable(this)) {
+        if (UtilClass.isNetworkAvailable(this)) {   //check if user is connected to internet or not
             ServerCommunicator serverCommunicator = new ServerCommunicator(this, this);
             serverCommunicator.makeGetRequest(this, Constants.URL, LIST_TAG, CanadaDetail.class);
         } else {
 
-            Toast.makeText(this, "Oops! It seems you are not connected with internet.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_error), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -8,8 +8,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="title"
-        android:textColor="@android:color/black"
+        android:textColor="@color/title_color"
         android:textSize="@dimen/title_size"
         android:textStyle="bold" />
 
@@ -22,7 +21,7 @@
         android:layout_marginRight="@dimen/row_padding"
         android:layout_toLeftOf="@+id/image_view"
         android:layout_toStartOf="@+id/image_view"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/description_size"/>
 
     <ImageView
