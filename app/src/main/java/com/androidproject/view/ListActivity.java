@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -33,12 +34,37 @@ public class ListActivity extends AppCompatActivity implements ResponseListener 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
         ButterKnife.bind(this);
+        initializeView();
+
+    }
+
+    private void initializeView() {
+
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+
+        setSupportActionBar(toolbar);
+
+        swipeRefreshLayout.setRefreshing(true);
+        callApi();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                callApi();
+            }
+        });
+    }
+
+    private void callApi() {
 
         if (UtilClass.isNetworkAvailable(this)) {
             ServerCommunicator serverCommunicator = new ServerCommunicator(this, this);
@@ -49,23 +75,34 @@ public class ListActivity extends AppCompatActivity implements ResponseListener 
         }
     }
 
-
     @Override
     public void onSuccess(Object obj, int tag) {
 
-        recyclerViewList.setHasFixedSize(true);
+        if (tag == LIST_TAG) {
 
-        CanadaDetail canadaDetail = (CanadaDetail) obj;
+            if (swipeRefreshLayout.isRefreshing()) {
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerViewList.setLayoutManager(mLayoutManager);
-        CanadaListAdapter adapter = new CanadaListAdapter(canadaDetail.getRows());
-        recyclerViewList.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+            recyclerViewList.setHasFixedSize(true);
+
+            CanadaDetail canadaDetail = (CanadaDetail) obj;
+
+            getSupportActionBar().setTitle(canadaDetail.getTitle());
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+            recyclerViewList.setLayoutManager(mLayoutManager);
+            CanadaListAdapter adapter = new CanadaListAdapter(canadaDetail.getRows());
+            recyclerViewList.setAdapter(adapter);
+        }
     }
 
     @Override
     public void onFailure(VolleyError error, int tag) {
 
+        if (swipeRefreshLayout.isRefreshing()) {
+
+            swipeRefreshLayout.setRefreshing(false);
+        }
         Toast.makeText(this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }
