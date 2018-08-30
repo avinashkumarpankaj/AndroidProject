@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import Utils.UtilClass;
+import utils.UtilClass;
 import model.ResponseListener;
 
 public class ServerCommunicator {
