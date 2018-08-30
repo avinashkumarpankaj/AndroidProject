@@ -1,5 +1,5 @@
 
-package model;
+package com.androidproject.model;
 
 
 public class Row {

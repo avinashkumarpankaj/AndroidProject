@@ -1,5 +1,5 @@
 
-package servercommunication;
+package com.androidproject.servercommunication;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,8 +14,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import utils.UtilClass;
-import model.ResponseListener;
+import com.androidproject.utils.UtilClass;
+import com.androidproject.model.ResponseListener;
 
 public class ServerCommunicator {
 

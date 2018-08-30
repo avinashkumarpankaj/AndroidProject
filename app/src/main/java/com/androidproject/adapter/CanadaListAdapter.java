@@ -1,4 +1,4 @@
-package adapter;
+package com.androidproject.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.Row;
+import com.androidproject.model.Row;
 
 /**
  * Created by Avinash on 8/28/2018.

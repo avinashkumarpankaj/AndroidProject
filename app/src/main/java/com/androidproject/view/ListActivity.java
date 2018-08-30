@@ -14,16 +14,16 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.androidproject.R;
 
-import utils.Constants;
-import utils.UtilClass;
-import adapter.CanadaListAdapter;
+import com.androidproject.utils.Constants;
+import com.androidproject.utils.UtilClass;
+import com.androidproject.adapter.CanadaListAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.CanadaDetail;
-import model.ResponseListener;
-import servercommunication.ServerCommunicator;
+import com.androidproject.model.CanadaDetail;
+import com.androidproject.model.ResponseListener;
+import com.androidproject.servercommunication.ServerCommunicator;
 
-import static utils.Constants.LIST_TAG;
+import static com.androidproject.utils.Constants.LIST_TAG;
 
 /**
  * Created by Avinash on 8/28/2018.

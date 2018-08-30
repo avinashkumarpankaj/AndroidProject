@@ -1,5 +1,5 @@
 
-package model;
+package com.androidproject.model;
 
 import java.util.ArrayList;
 

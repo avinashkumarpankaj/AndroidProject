@@ -1,4 +1,4 @@
-package model;
+package com.androidproject.model;
 
 import com.android.volley.VolleyError;
 
