@@ -1,27 +1,29 @@
 package com.androidproject.view;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.androidproject.R;
-
-import com.androidproject.utils.Constants;
-import com.androidproject.utils.UtilClass;
 import com.androidproject.adapter.CanadaListAdapter;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.androidproject.model.CanadaDetail;
 import com.androidproject.model.ResponseListener;
 import com.androidproject.servercommunication.ServerCommunicator;
+import com.androidproject.utils.Constants;
+import com.androidproject.utils.UtilClass;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.androidproject.utils.Constants.LIST_TAG;
 
@@ -45,6 +47,9 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
 
     @BindView(R.id.btn_retry)
     Button btnRetry;
+
+    @BindView(R.id.txt_error)
+    TextView txtError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +82,16 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
 
         if (UtilClass.isNetworkAvailable(this)) {   //check if user is connected to internet or not
 
-            layoutRetry.setVisibility(View.GONE);
+            setRetryLayout(View.GONE, null);     //TextView handles null value automatically
+            // so we can set null value without checking for null pointer exception
             swipeRefreshLayout.setRefreshing(true);
             ServerCommunicator serverCommunicator = new ServerCommunicator(this, this);
             serverCommunicator.makeGetRequest(this, Constants.URL, LIST_TAG, CanadaDetail.class);
         } else {
 
-            layoutRetry.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
+            setRetryLayout(View.VISIBLE, getResources().getString(R.string.no_internet_error)
+                    + " " + getResources().getString(R.string.retry_msg));
             Toast.makeText(this, getResources().getString(R.string.no_internet_error), Toast.LENGTH_SHORT).show();
         }
     }
@@ -104,6 +112,7 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
             getSupportActionBar().setTitle(canadaDetail.getTitle());
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
             recyclerViewList.setLayoutManager(mLayoutManager);
+            recyclerViewList.setItemAnimator(new DefaultItemAnimator());
             CanadaListAdapter adapter = new CanadaListAdapter(canadaDetail.getRows());
             recyclerViewList.setAdapter(adapter);
         }
@@ -116,7 +125,9 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
 
             swipeRefreshLayout.setRefreshing(false);
         }
-        Toast.makeText(this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+
+        setRetryLayout(View.VISIBLE, error.getMessage()+ " " + getResources().getString(R.string.retry_msg));
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -127,4 +138,11 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
             callApi();
         }
     }
+
+    private void setRetryLayout(int visibility, String msg) {
+
+        layoutRetry.setVisibility(visibility);
+        txtError.setText(msg);
+    }
+
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidProject</string>
     <string name="no_internet_error">Oops! It seems you are not connected with internet.</string>
+    <string name="retry_msg">Hit Retry or Swipe down to try again.</string>
 </resources>
