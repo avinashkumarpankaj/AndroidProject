@@ -128,6 +128,7 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
             swipeRefreshLayout.setRefreshing(false);
         }
 
+        recyclerViewList.setVisibility(View.GONE);
         setRetryLayout(View.VISIBLE, error.getMessage()+ " " + getResources().getString(R.string.retry_msg));
         Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
     }
