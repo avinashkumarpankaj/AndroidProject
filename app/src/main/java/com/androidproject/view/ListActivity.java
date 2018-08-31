@@ -90,6 +90,7 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
         } else {
 
             swipeRefreshLayout.setRefreshing(false);
+            recyclerViewList.setVisibility(View.GONE);
             setRetryLayout(View.VISIBLE, getResources().getString(R.string.no_internet_error)
                     + " " + getResources().getString(R.string.retry_msg));
             Toast.makeText(this, getResources().getString(R.string.no_internet_error), Toast.LENGTH_SHORT).show();
@@ -109,6 +110,7 @@ public class ListActivity extends AppCompatActivity implements ResponseListener,
 
             CanadaDetail canadaDetail = (CanadaDetail) obj;
 
+            recyclerViewList.setVisibility(View.VISIBLE);
             getSupportActionBar().setTitle(canadaDetail.getTitle());
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
             recyclerViewList.setLayoutManager(mLayoutManager);
