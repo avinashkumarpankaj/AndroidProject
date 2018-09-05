@@ -19,18 +19,16 @@ import com.androidproject.model.ResponseListener;
 
 public class ServerCommunicator {
 
-    private Context context;
-    ResponseListener responseInterface;
+    private ResponseListener responseInterface;
+    private static final String TAG = ServerCommunicator.class.getSimpleName();
 
     public ServerCommunicator(Context context, ResponseListener responseInterface) {
-        this.context = context;
         this.responseInterface = responseInterface;
     }
 
     public void makeGetRequest( final Activity mContext, final String url, final int tag, final Class responseClass) {
         try {
 
-            context = mContext;
             JsonObjectRequest jsonRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null,
                             new Response.Listener<JSONObject>() {
@@ -42,9 +40,8 @@ public class ServerCommunicator {
                                                 UtilClass.parseJson(response.toString(),
                                                         responseClass), tag);
                                     } catch (Exception e) {
-                                        Log.e("ServerCommunicator", e.toString());
+                                        Log.e(TAG, e.toString());
                                         VolleyError error1 = new VolleyError();
-                                        error1.initCause(e);
                                         responseInterface.onFailure(error1, tag);
 
                                     }
@@ -58,7 +55,7 @@ public class ServerCommunicator {
                                         error.printStackTrace();
                                         responseInterface.onFailure(error, tag);
                                     } catch (Exception e) {
-                                        Log.e("ServerCommunicator", e.toString());
+                                        Log.e(TAG, e.toString());
                                     }
                                 }
                             }
@@ -73,10 +70,10 @@ public class ServerCommunicator {
 
         } catch (OutOfMemoryError e) {
             responseInterface.onFailure(new VolleyError(), tag);
-            Log.e("ServerCommunicator", e.toString());
+            Log.e(TAG, e.toString());
         } catch (Exception e) {
             responseInterface.onFailure(new VolleyError(), tag);
-            Log.e("ServerCommunicator", e.toString());
+            Log.e(TAG, e.toString());
         }
     }
 

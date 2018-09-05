@@ -2,4 +2,6 @@
     <string name="app_name">AndroidProject</string>
     <string name="no_internet_error">Oops! It seems you are not connected with internet.</string>
     <string name="retry_msg">Hit Retry or Swipe down to try again.</string>
+    <string name="retry">Retry</string>
+    <string name="empty_description">**Description not available**</string>
 </resources>

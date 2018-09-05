@@ -8,13 +8,15 @@ import com.google.gson.Gson;
 
 public class UtilClass {
 
+    private final static String TAG =UtilClass.class.getSimpleName();
+
     public static Object parseJson(String jsonString, Class responseClass) {
         try {
             if (jsonString != null) {
-                return (Object) new Gson().fromJson(jsonString, responseClass);
+                return new Gson().fromJson(jsonString, responseClass);
             }
         } catch (Exception e) {
-            Log.e("JsonParser", e.toString());
+            Log.e(TAG, e.toString());
         }
         return null;
 
@@ -22,15 +24,19 @@ public class UtilClass {
 
     public static boolean isNetworkAvailable(Context context) {
 
-        /** Handling network management connections */
-        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        try {
+            /** Handling network management connections */
+            ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable()
-                && conMgr.getActiveNetworkInfo().isConnected()) {
-            return true; // Returning true if we are connecting to network
-        } else {
-            return false; // Returns false
+            if (conMgr != null) {
+                // Returning true if we are connecting to network
+                return conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isConnected();
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
 
+        return false;
     }
 }
