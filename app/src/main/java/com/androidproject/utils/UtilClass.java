@@ -2,6 +2,7 @@ package com.androidproject.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -30,7 +31,8 @@ public class UtilClass {
 
             if (conMgr != null) {
                 // Returning true if we are connecting to network
-                return conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isConnected();
+                NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+                return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
             }
         } catch (Exception e) {
 
